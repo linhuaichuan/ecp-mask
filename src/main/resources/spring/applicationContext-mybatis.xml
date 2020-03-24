@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<description>Spring-MyBatis配置 </description>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:/mybatis/*Mapper.xml</value>
+                <value>classpath*:/mybatis/${jdbc.dbType}/*/*Mapper.xml</value>
+                <value>classpath*:/mybatis/${jdbc.dbType}/*/*Mapper.ext.xml</value>
+            </list>
+        </property>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+		<property name="typeAliasesPackage" value="com.myzmds.**.entity.*" />
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+       <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+	<!-- 模仿 mybatis实现mapper自动注入-->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.myzmds.**.mapper" />
+		<property name="properties">
+	        <value>
+	            notEmpty=true
+	        </value>
+	    </property>
+	</bean>
+</beans>

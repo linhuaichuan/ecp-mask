@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<description>Spring-事务管理配置 </description>
+
+	<!-- 事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*Tran" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="*Trans" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="*SubTran" propagation="REQUIRES_NEW"/>
+            
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception" />
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception" />
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
+            <tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception" />
+            <tx:method name="clean*" propagation="REQUIRED" rollback-for="Exception" />
+            
+            <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="count*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="*List" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="*Page" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+	 
+	<!-- 只对业务逻辑层实施事务 -->
+	<aop:config expose-proxy="true" proxy-target-class="true">
+        <aop:pointcut id="txPointcut" expression="execution(* com.myzmds..service..*+.*(..))"/>
+        <aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+    <!--aop 自动代理-->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+</beans>
