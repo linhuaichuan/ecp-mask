@@ -6,7 +6,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 //rem的意思是注释
 rem 链接  
-set URL="http://cdn.hygyc.com/"
+set URL="http://********/"
 rem tomcat目录  
 set TOMCAT_HOME="D:\apache-tomcat-7.0.100"
 rem 关闭tomcat命令的路径  
