@@ -71,7 +71,7 @@ public class AsynRegJob implements InitializingBean, DisposableBean {
     
     /**
      * @方法名称 limit
-     * @功能描述 <pre>限购配置更新(每秒)</pre>
+     * @功能描述 <pre>限购配置更新(每5秒)</pre>
      */
     @Scheduled(fixedDelay = 5000)
     public void limit() {

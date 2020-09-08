@@ -46,15 +46,14 @@ public class PeopleRegService {
         if (list.size() > 0) {
             int cycle = (int)Math.ceil(list.size() / 600);
             for (int i = 0; i < cycle;) {
-                int start = cycle * i;
-                int last = cycle * (++i);
+                int start = 600 * i;
+                int last = 600 * (++i);
                 if (last > list.size()) {
                     last = list.size();
                 }
                 peopleMapper.insertList(list.subList(start, last));
             }
             FlagConfig.curConfig.surplus = FlagConfig.curConfig.surplus - list.size() * FlagConfig.limitNum;
-            peopleMapper.insertList(list);
             configMapper.updateByPrimaryKey(FlagConfig.curConfig);
         }
     }
