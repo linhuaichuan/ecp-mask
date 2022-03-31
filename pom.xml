@@ -15,7 +15,7 @@
 		<!-- jdk版本 -->
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework.version>4.3.25.RELEASE</org.springframework.version>
+		<org.springframework.version>5.3.18</org.springframework.version>
 		<!-- Spring 依赖 -->
 		<xstream.version>1.4.18</xstream.version>
 		<aspectj.version>1.9.1</aspectj.version><!-- AspectJ是一个面向切面的框架 -->
